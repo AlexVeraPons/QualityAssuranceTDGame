@@ -4,7 +4,7 @@
     The timer can invoke events when it starts, stops, and reaches the maximum time.
 
     Example usage:
-    !!! Make sure to call the Update() method in the Update() method of the MonoBehaviour that uses the timer !!!
+    !!! Make sure to call the UpdateTimer(float deltaTIme) method in the Update() method of the MonoBehaviour that uses the timer !!!
     Timer timer = new Timer(60f); // Create a timer with a maximum time of 60 seconds
     timer.OnTimerStart += () => Debug.Log("Timer started"); // Subscribe to the OnTimerStart event
     timer.OnTimerEnd += () => Debug.Log("Timer ended"); // Subscribe to the OnTimerEnd event
@@ -14,7 +14,6 @@
 */
 
 using System;
-using UnityEngine;
 
 /// <summary>
 /// Represents a timer utility class that can be used to measure time intervals.
@@ -45,8 +44,7 @@ public class Timer
     // Fields
     private bool _timerRunning = false;
     private float _time;
-
-    [SerializeField] private float _maxTime;
+    private float _maxTime;
 
     public Timer() { }
 
@@ -103,17 +101,17 @@ public class Timer
     }
 
 
-    public void UpdateTimer()
+    public void UpdateTimer(float deltaTime)
     {
         if (_timerRunning)
         {
-            RunTimer();
+            RunTimer(deltaTime);
         }
     }
 
-    private void RunTimer()
+    private void RunTimer(float deltaTime)
     {
-        _time += Time.deltaTime;
+        _time += deltaTime;
         if (_time >= _maxTime)
         {
             OnTimerEnd?.Invoke();
