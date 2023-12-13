@@ -42,22 +42,10 @@ namespace TowerDefenseGame.Spawner
                 Debug.LogError("Spawner: missing IGameObjectFactory component");
             }
         }
-        private void Update()
-        {
-            _timerForSpawner.UpdateTimer(Time.deltaTime);
-        }
-        public void SetSpawnerStats(SpawnerStats spawnerStats)
-        {
-            _spawnerStats = spawnerStats;
-        }
-        public void StopSpawning()
-        {
-            _timerForSpawner.StopTimer();
-        }
-        public void StartSpawning()
-        {
-            _timerForSpawner.StartTimer();
-        }
+        private void Update() { _timerForSpawner.UpdateTimer(Time.deltaTime); }
+        public void SetSpawnerStats(SpawnerStats spawnerStats) { _spawnerStats = spawnerStats; }
+        public void StopSpawning() { _timerForSpawner.StopTimer(); }
+        public void StartSpawning() { _timerForSpawner.StartTimer(); }
 
         public void StartSpawning(float spawnAmmount)
         {
@@ -67,6 +55,13 @@ namespace TowerDefenseGame.Spawner
 
         private void SpawnTimerEnded()
         {
+            if (_spawnedCount >= _objectsToSpawn)
+            {
+                _timerForSpawner.StopTimer();
+                _spawnedCount = 0;
+                return;
+            }
+
             Spawn();
         }
         private void Spawn()
@@ -77,11 +72,7 @@ namespace TowerDefenseGame.Spawner
             _spawnedCount++;
             OnSpawned?.Invoke();
 
-            if (_spawnedCount >= _objectsToSpawn)
-            {
-                _timerForSpawner.StopTimer();
-                _spawnedCount = 0;
-            }
+
         }
     }
 }
