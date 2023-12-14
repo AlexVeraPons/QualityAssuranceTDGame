@@ -8,7 +8,8 @@ namespace TowerDefenseGame.Spawner
     public class Spawner : MonoBehaviour
     {
         public Action OnSpawned;
-        [SerializeField] private SpawnerStats _spawnerStats;
+        [SerializeField] private bool _spawnOnStart;
+        [SerializeField] private float _spawnInterval;
         [SerializeField] private uint _objectsToSpawn;
         private uint _spawnedCount;
         private Timer _timerForSpawner;
@@ -16,26 +17,26 @@ namespace TowerDefenseGame.Spawner
 
         private void OnEnable()
         {
-            if (_spawnerStats != null)
+            if (_spawnInterval > 0)
             {
                 _timerForSpawner.OnTimerEnd += SpawnTimerEnded;
             }
             else
             {
-                Debug.LogError("Spawner: missing SpawnerStats component");
+                Debug.LogError("Spawner: invalid spawner interval");
             }
         }
 
         private void OnDisable()
         {
-            if (_spawnerStats != null)
+            if (_spawnInterval > 0)
             {
                 _timerForSpawner.OnTimerEnd -= SpawnTimerEnded;
             }
         }
         private void Awake()
         {
-            _timerForSpawner = new Timer(_spawnerStats.spawnRate, false, false);
+            _timerForSpawner = new Timer(_spawnInterval, false, false);
             _gameObjectFactory = GetComponent<IGameObjectFactory>();
             if (_gameObjectFactory == null)
             {
@@ -44,11 +45,11 @@ namespace TowerDefenseGame.Spawner
         }
         private void Start()
         {
-            StartSpawning();
+            if (_spawnOnStart) { StartSpawning(); }
         }
         private void Update() { _timerForSpawner.UpdateTimer(Time.deltaTime); }
         private void LateUpdate() { CheckAmmountSpawned(); }
-        public void SetSpawnerStats(SpawnerStats spawnerStats) { _spawnerStats = spawnerStats; }
+        public void SetSpawnerSpeed(float spawnerSpeed) { _spawnInterval = spawnerSpeed; }
         public void StopSpawning() { _timerForSpawner.StopTimer(); }
         public void StartSpawning()
         {
@@ -80,10 +81,7 @@ namespace TowerDefenseGame.Spawner
 
         private void Spawn()
         {
-
-            GameObject spawnedObject = Instantiate(_gameObjectFactory.GetGameObject(), transform.position, Quaternion.identity);
-            spawnedObject.transform.SetParent(transform);
-
+            GameObject spawnedObject = Instantiate(_gameObjectFactory.GetGameObject(), transform.position, transform.rotation);
             _spawnedCount++;
             OnSpawnedEvent();
         }
