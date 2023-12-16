@@ -5,7 +5,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace TowerDefenseGame.Pathfinding
 {
-    public class PathfindingPoint
+    internal class PathfindingPoint
     {
         public Vector3 Position { get; set; }
         public Vector3 Direction { get; set; }
@@ -13,7 +13,7 @@ namespace TowerDefenseGame.Pathfinding
 
     public class ConveyorPathFinding : MonoBehaviour
     {
-        [SerializeField] private float _speed = 3f;
+        [SerializeField] private float _speed;
         private List<PathfindingPoint> _path = new List<PathfindingPoint>();
 
         private IMovement _movement;
@@ -38,6 +38,16 @@ namespace TowerDefenseGame.Pathfinding
                 }
             }
         }
+        private void Start() {
+            if(_speed == 0f) {
+                Debug.LogError("Speed is 0. Please set a speed value.");
+            }
+        }
+
+        public void SetSpeed(float speed)
+        {
+            _speed = speed;
+        }
 
         private bool GetNextPathPoint(out Vector3 nextPoint, out Vector3 nextDirection)
         {
@@ -60,7 +70,7 @@ namespace TowerDefenseGame.Pathfinding
 
                     return true;
                 }
-                else if (hit.collider.gameObject.GetComponent<PathfindingGoal>() != null)
+                else if (hit.collider.gameObject.GetComponent<IPathfindingGoal>() != null)
                 {
                     nextPoint = hit.point;
                     return true;
@@ -90,7 +100,7 @@ namespace TowerDefenseGame.Pathfinding
             _movement.MoveTowards(_path[0].Position, _speed);
 
             if (Vector3.Distance(transform.position, _path[0].Position) < 0.1f)
-            {	
+            {
                 _path.RemoveAt(0);
             }
         }
