@@ -88,7 +88,6 @@ namespace TowerDefenseGame.Spawner
 
         public void OnSpawnedEvent()
         {
-            Debug.Log("Spawner: OnSpawnedEvent");
             OnSpawned?.Invoke();
         }
 

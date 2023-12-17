@@ -2,14 +2,16 @@ using UnityEngine;
 using TowerDefenseGame.Pathfinding;
 using System;
 
-namespace TowerDefenseGame.Enemy
+namespace TowerDefenseGame
 {
     public class Goal : MonoBehaviour, IPathfindingGoal, IGoal
     {
-        public Action<float> OnReachedGoal;
-        public void ReachedGoal(float value)
+        public static Action<int> OnGoalReached;
+
+        public void ReachedGoal(int value)
         {
-            OnReachedGoal?.Invoke(value);
+            Debug.Log($"Goal: {value}");
+            OnGoalReached?.Invoke(value);
         }
     }
 }

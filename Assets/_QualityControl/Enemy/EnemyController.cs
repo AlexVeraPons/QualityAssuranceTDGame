@@ -22,14 +22,14 @@ namespace TowerDefenseGame.Enemy
             if (other.gameObject.GetComponent<IGoal>() != null)
             {
                 IGoal goal = other.gameObject.GetComponent<IGoal>();
-                
+
                 if (_isDefeated)
                 {
                     goal.ReachedGoal(_stats.value);
                 }
                 else
                 {
-                    goal.ReachedGoal(- (_stats.value * _penaltyPercentage));
+                    goal.ReachedGoal(Mathf.RoundToInt(-(_stats.value * _penaltyPercentage)));
                 }
 
                 ReachedEnd();
@@ -39,6 +39,7 @@ namespace TowerDefenseGame.Enemy
         private void ReachedEnd()
         {
             OnEndReached?.Invoke();
+            Destroy(gameObject);
             return;
         }
 

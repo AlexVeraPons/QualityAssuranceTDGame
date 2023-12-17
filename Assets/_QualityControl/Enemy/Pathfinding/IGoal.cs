@@ -1,7 +1,9 @@
-namespace TowerDefenseGame.Enemy
+using System;
+
+namespace TowerDefenseGame
 {
-    public interface IGoal 
+    public interface IGoal
     {
-        public void ReachedGoal(float value);
+        public void ReachedGoal(int value);
     }
 }

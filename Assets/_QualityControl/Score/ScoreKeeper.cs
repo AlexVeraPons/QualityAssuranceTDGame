@@ -1,8 +1,6 @@
-
 using System;
-using System.Diagnostics;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Score
 {
     public class ScoreKeeper 
     {

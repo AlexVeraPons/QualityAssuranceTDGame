@@ -6,6 +6,6 @@ namespace TowerDefenseGame.Enemy
     public class EnemyStats : ScriptableObject 
     {
         public float health;
-        public float value;   
+        public int value;   
     }
 }
