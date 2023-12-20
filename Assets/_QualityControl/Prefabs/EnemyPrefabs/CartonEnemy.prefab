@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3719c31bd628b3d4ab25783596e03008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _penaltyPercentage: 0.5
   _stats: {fileID: 11400000, guid: cca6c26c1e80ff64dbf15816b4415385, type: 2}
 --- !u!65 &2032802864442112212
 BoxCollider:
