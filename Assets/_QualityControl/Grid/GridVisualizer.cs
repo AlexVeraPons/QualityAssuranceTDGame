@@ -1,4 +1,5 @@
-    using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 namespace TowerDefenseGame.GridLayout
@@ -19,6 +20,8 @@ namespace TowerDefenseGame.GridLayout
         private int _height => _gridConfig.Height;
         private Vector3 _cellSize => _gridConfig.CellSize;
         private Vector3 _cellGap => _gridConfig.CellGap;
+
+        private Dictionary<Vector2Int, GameObject> _tiles = new();
         
         private void Start()
         {
@@ -32,6 +35,7 @@ namespace TowerDefenseGame.GridLayout
 
             Vector2Int initialCell = new Vector2Int((int)(-_width / 2), (int)(-_height / 2));
 
+            //we iterate through the grid and instantiate a tile for each cell
             for (int x = 0; x < _width; x++)
             {
                 for (int y = 0; y < _height; y++)
@@ -52,6 +56,8 @@ namespace TowerDefenseGame.GridLayout
 
                     tile.transform.localScale = new Vector3(newScale.y, newScale.x, 0);
                     tile.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z + 90);
+
+                    _tiles.Add(cellPosition, tile);
                 }
             }
         }
@@ -62,5 +68,6 @@ namespace TowerDefenseGame.GridLayout
             Gizmos.DrawWireCube(transform.position, new Vector3(_width * (_cellSize.x + _cellGap.x), 1f, _height * (_cellSize.y + _cellGap.y)));
 
         }
+
     }
 }

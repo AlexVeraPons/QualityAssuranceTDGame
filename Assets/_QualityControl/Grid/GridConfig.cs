@@ -6,8 +6,6 @@ namespace TowerDefenseGame.GridLayout
     [CreateAssetMenu(fileName = "GridConfig", menuName = "TowerDefenseGame/GridConfig", order = 0)]
     public class GridConfig : ScriptableObject 
     {
-        public List<CellInfo> CellInfoList = new List<CellInfo>();
-
         public int Width;
         public int Height;
 
