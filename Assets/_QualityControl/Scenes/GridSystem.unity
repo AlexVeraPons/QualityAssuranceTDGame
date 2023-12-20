@@ -453,7 +453,7 @@ MonoBehaviour:
   _camera: {fileID: 338414055}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 64
 --- !u!4 &1245978891
 Transform:
   m_ObjectHideFlags: 0

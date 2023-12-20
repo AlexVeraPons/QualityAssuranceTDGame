@@ -42,8 +42,6 @@ namespace TowerDefenseGame.GridLayout
                     GameObject tile = Instantiate(_tilePrefab, center, Quaternion.identity);
                     tile.GetComponent<SpriteRenderer>().color = _tileColor;
                     tile.transform.parent = transform;
-                    Cell cellScript = tile.GetComponent<Cell>();
-                    cellScript.SetPosition(cellPosition);
 
                     
 
