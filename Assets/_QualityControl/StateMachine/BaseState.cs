@@ -1,0 +1,36 @@
+using UnityEngine;
+using System;
+
+namespace StateMachine
+{
+    public class BaseState : MonoBehaviour
+    {
+        public Action OnEntered;
+        public  Action OnExited;
+
+        [NonSerialized] public bool IsActive;
+
+        public virtual void OnUpdate() { }
+
+        public virtual void OnEnter()
+        {
+            IsActive = true;
+            OnEntered?.Invoke();
+        }
+
+        public virtual void OnExit()
+        {
+            IsActive = false;
+            OnExited?.Invoke();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (IsActive)
+            {
+                OnExit();
+            }
+
+        }
+    }
+}
