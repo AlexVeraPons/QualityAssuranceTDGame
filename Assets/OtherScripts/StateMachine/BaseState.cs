@@ -3,7 +3,7 @@ using System;
 
 namespace StateMachine
 {
-    public class BaseState : MonoBehaviour
+    public abstract class BaseState : MonoBehaviour
     {
         public Action OnEntered;
         public  Action OnExited;

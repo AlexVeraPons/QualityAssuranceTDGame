@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace StateMachine
 {
-    public class BaseStateMachine : MonoBehaviour 
+    public abstract class BaseStateMachine : MonoBehaviour 
     {
         public Action OnChangeState;
         protected BaseState currentState;
 
-        public void SwitchState(BaseState state)
+        public virtual void SwitchState<T>(T state) where T : BaseState
         {
             if (currentState != null)
             {
@@ -17,6 +17,7 @@ namespace StateMachine
 
             currentState = state;
             currentState.OnEnter();
+            OnChangeState?.Invoke();
         }
 
         protected virtual void Update()
