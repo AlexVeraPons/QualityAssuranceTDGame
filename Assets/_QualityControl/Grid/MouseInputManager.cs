@@ -7,6 +7,8 @@ namespace TowerDefenseGame.GridLayout
     {
         public Action OnLeftMouseButtonDown;
 
+        public Action OnRightMouseButtonDown;
+
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _layerMask;
 
@@ -48,6 +50,11 @@ namespace TowerDefenseGame.GridLayout
             if (Input.GetMouseButtonDown(0))
             {
                 OnLeftMouseButtonDown?.Invoke();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                OnRightMouseButtonDown?.Invoke();
             }
         }
 

@@ -5,11 +5,15 @@ namespace TowerDefenseGame.Score
 {
     public class ScoreManager : MonoBehaviour
     {
-        public Action<int> OnScoreChanged;
+        [SerializeField] private int _initialScore;
+        public static  Action<int> OnScoreChanged;
         private ScoreKeeper _scoreKeeper;
         private void Awake()
         {
-            _scoreKeeper = new ScoreKeeper();
+            _scoreKeeper = new ScoreKeeper(_initialScore);
+        }
+        private void Start() {
+            OnScoreChanged?.Invoke(_scoreKeeper.Score);
         }
 
         private void OnEnable()
