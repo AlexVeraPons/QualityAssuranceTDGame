@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b93c0bf2643cc4f9a52b49b7c07c11, type: 3}
   m_Name: DummyGridConfig
   m_EditorClassIdentifier: 
-  Width: 10
-  Height: 10
+  Width: 20
+  Height: 20
   CellSize: {x: 1, y: 1, z: 0}
   CellGap: {x: 0, y: 0, z: 0}

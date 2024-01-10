@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace TowerDefenseGame.Score
 {
@@ -6,6 +7,16 @@ namespace TowerDefenseGame.Score
     {
         public Action OnScoreChanged;
         public int Score { get; private set; }
+
+        public ScoreKeeper()
+        {
+            Score = 0;
+        }
+
+        public ScoreKeeper(int score)
+        {
+            Score = score;
+        }
 
         public void AddScore(int value)
         {

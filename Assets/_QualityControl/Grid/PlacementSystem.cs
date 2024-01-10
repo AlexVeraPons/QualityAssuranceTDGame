@@ -5,6 +5,7 @@ namespace TowerDefenseGame.GridLayout
     public class PlacementSystem : MonoBehaviour, IPlace
     {
         public Action OnObjectPlaced;
+        public Action OnObjectDeselected;
 
         [Header("References")]
         [SerializeField] private GridManager _gridManager;
@@ -27,10 +28,12 @@ namespace TowerDefenseGame.GridLayout
 
         private void OnEnable() {
             _inputManager.OnLeftMouseButtonDown += PlacementSqeuence;
+            _inputManager.OnRightMouseButtonDown += DeselectObject;
         }
 
         private void OnDisable() {
             _inputManager.OnLeftMouseButtonDown -= PlacementSqeuence;
+            _inputManager.OnRightMouseButtonDown -= DeselectObject;
         }
 
         private void Update()
@@ -52,7 +55,6 @@ namespace TowerDefenseGame.GridLayout
 
         private void UpdateObjectToPlace()
         {
-            Debug.Log("Update object to place");
             Vector3Int cellPosition = CellPositionFromMousePosition();
             Vector3 cellTransform = _grid.GetCellCenterWorld(cellPosition);
             cellTransform.y += _yOffset*2;
@@ -90,10 +92,12 @@ namespace TowerDefenseGame.GridLayout
                 }
             }
 
-            CellInfo newCellInfo = new CellInfo();
-            newCellInfo.Position = cellPosition;
-            newCellInfo.IsOccupied = true;
-            newCellInfo.OccupyingObject = _objectToPlace;
+            CellInfo newCellInfo = new CellInfo
+            {
+                Position = cellPosition,
+                IsOccupied = true,
+                OccupyingObject = _objectToPlace
+            };
 
             _objectToPlace.GetComponent<IPlacebleObject>().Place(_grid.GetCellCenterWorld((Vector3Int)cellPosition));
             _objectToPlace = null;
@@ -114,5 +118,14 @@ namespace TowerDefenseGame.GridLayout
             }
         }
 
+        private void DeselectObject()
+        {
+            if(_objectToPlace == null) return;
+
+            Destroy(_objectToPlace);
+            _objectToPlace = null;
+
+            OnObjectDeselected?.Invoke();
+        }
     }
 }
